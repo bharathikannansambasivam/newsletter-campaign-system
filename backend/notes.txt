@@ -1,0 +1,26 @@
+
+// exports.sendCampaign = async (req, res) => {
+//   try {
+//     const campaign = await Campaign.findById(req.params.id);
+
+//     if (!campaign) {
+//       return res.status(404).json({ message: "Campaign not found" });
+//     }
+
+//     const subscribers = await Subscriber.find();
+
+//     subscribers.forEach((sub) => {
+//       emailQueue.push({
+//         email: sub.email,
+//         campaignId: campaign._id,
+//       });
+//     });
+
+//     campaign.status = "sent";
+//     await campaign.save();
+
+//     res.json({ message: `${subscribers.length} emails added to queue` });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
