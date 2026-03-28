@@ -16,6 +16,10 @@ const subscriberSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    companyName: {
+      lowercase: true,
+      type: String,
+    },
   },
   { timestamps: true }
 );

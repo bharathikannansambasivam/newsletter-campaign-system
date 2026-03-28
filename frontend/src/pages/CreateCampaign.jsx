@@ -18,7 +18,6 @@ export default function CreateCampaign() {
     const payload = {
       subject: form.subject,
       content: form.content,
-      companyId: localStorage.getItem("companyId"),
       ...(form.scheduledAt && { scheduledAt: new Date(form.scheduledAt).toISOString() }),
     };
     const res = await api.post("/campaign", payload);

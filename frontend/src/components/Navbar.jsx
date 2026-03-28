@@ -1,9 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Navbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const companyId = localStorage.getItem("companyId");
+  const companyName = localStorage.getItem("companyName");
 
   const guestLinks = [
     { to: "/", label: "Landing" },
@@ -17,10 +18,15 @@ export default function Navbar() {
     { to: "/create-campaign", label: "Create Campaign" },
   ];
 
-  const links = companyId ? authLinks : guestLinks;
+  const links = companyName ? authLinks : guestLinks;
 
-  const handleLogout = () => {
-    localStorage.removeItem("companyId");
+  const handleLogout = async () => {
+    try {
+      await api.post("/company/logout");
+    } catch {
+      // ignore — clear client state regardless
+    }
+    localStorage.removeItem("companyName");
     navigate("/");
   };
 
@@ -43,13 +49,16 @@ export default function Navbar() {
             {label}
           </Link>
         ))}
-        {companyId && (
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-          >
-            Logout
-          </button>
+        {companyName && (
+          <>
+            <span className="px-3 py-2 text-sm text-gray-400">{companyName}</span>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+            >
+              Logout
+            </button>
+          </>
         )}
       </div>
     </nav>

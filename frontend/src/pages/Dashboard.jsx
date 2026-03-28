@@ -16,14 +16,29 @@ export default function Dashboard() {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [sending, setSending] = useState(null); // campaign id currently being sent
 
   useEffect(() => {
     api
-      .get("/campaigns", { params: { companyId: localStorage.getItem("companyId") } })
+      .get("/campaigns")
       .then((res) => setCampaigns(res.data))
       .catch(() => setError("Failed to load campaigns."))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleSend = async (campaign) => {
+    setSending(campaign._id);
+    try {
+      await api.post(`/campaign/${campaign._id}/send`);
+      setCampaigns((prev) =>
+        prev.map((c) => (c._id === campaign._id ? { ...c, status: "processing" } : c))
+      );
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to send campaign.");
+    } finally {
+      setSending(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -75,17 +90,45 @@ export default function Dashboard() {
           ) : (
             <ul className="divide-y divide-gray-50">
               {campaigns.map((c) => (
-                <li key={c._id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                  <div>
-                    <p className="font-medium text-gray-800 text-sm">{c.subject}</p>
+                <li key={c._id} className="px-6 py-4 flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
+                  <div className="min-w-0">
+                    <p className="font-medium text-gray-800 text-sm truncate">{c.subject}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       Created: {new Date(c.createdAt).toLocaleDateString()}
                       {c.scheduledAt && ` · Scheduled: ${new Date(c.scheduledAt).toLocaleString()}`}
                     </p>
                   </div>
-                  <span className={`text-xs font-semibold px-3 py-1 rounded-full capitalize ${STATUS_STYLES[c.status] ?? STATUS_STYLES.draft}`}>
-                    {c.status}
-                  </span>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className={`text-xs font-semibold px-3 py-1 rounded-full capitalize ${STATUS_STYLES[c.status] ?? STATUS_STYLES.draft}`}>
+                      {c.status}
+                    </span>
+
+                    <Link
+                      to={`/campaign/${c._id}/stats`}
+                      className="text-xs text-orange-500 hover:text-orange-600 font-medium px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors"
+                    >
+                      Stats
+                    </Link>
+
+                    {c.status === "draft" && (
+                      <button
+                        onClick={() => handleSend(c)}
+                        disabled={sending === c._id}
+                        className="text-xs bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-semibold px-3 py-1 rounded-lg transition-colors flex items-center gap-1"
+                      >
+                        {sending === c._id ? (
+                          <>
+                            <svg className="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                            </svg>
+                            Sending...
+                          </>
+                        ) : "Send"}
+                      </button>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>

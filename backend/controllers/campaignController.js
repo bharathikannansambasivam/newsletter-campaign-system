@@ -12,7 +12,6 @@ exports.subscribe = async (req, res) => {
       return res.status(400).json({ message: "Email and company required" });
     }
 
-    
     const foundCompany = await Company.findOne({
       companyName: company,
     });
@@ -20,6 +19,7 @@ exports.subscribe = async (req, res) => {
     if (!foundCompany) {
       return res.status(404).json({ message: "Company not found" });
     }
+    console.log(foundCompany);
 
     const existingSubscriber = await Subscriber.findOne({
       email,
@@ -35,6 +35,7 @@ exports.subscribe = async (req, res) => {
 
     await Subscriber.create({
       email,
+      companyName: foundCompany.companyName,
       companyId: foundCompany._id,
     });
 
@@ -50,7 +51,8 @@ exports.subscribe = async (req, res) => {
 
 exports.createCampaign = async (req, res) => {
   try {
-    const { subject, content, scheduledAt, companyId } = req.body;
+    const { subject, content, scheduledAt } = req.body;
+    const companyId = req.user.companyId;
 
     const campaign = await Campaign.create({
       subject,
@@ -172,7 +174,9 @@ exports.unsubscribe = async (req, res) => {
     const { email, companyId } = req.query;
 
     if (!email || !companyId) {
-      return res.status(400).json({ message: "email and companyId are required" });
+      return res
+        .status(400)
+        .json({ message: "email and companyId are required" });
     }
 
     const subscriber = await Subscriber.findOne({ email, companyId });
@@ -192,12 +196,10 @@ exports.unsubscribe = async (req, res) => {
 
 exports.getCampaigns = async (req, res) => {
   try {
-    const { companyId } = req.query;
+    const companyId = req.user.companyId;
     const campaigns = await Campaign.find({ companyId });
     res.json(campaigns);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
