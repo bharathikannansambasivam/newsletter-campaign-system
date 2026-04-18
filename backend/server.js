@@ -18,6 +18,7 @@ app.use(
       "http://18.214.154.222:3000",
       "https://newsletter-campaign-system.vercel.app",
       "https://newslettercam.me",
+      "https://newsletter-campaign-frontend.onrender.com",
     ],
     credentials: true,
   })
