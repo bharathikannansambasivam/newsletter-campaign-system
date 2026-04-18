@@ -11,7 +11,17 @@ const router = require("./routes/route.js");
 const companyRoutes = require("./routes/companyRoutes.js");
 const Campaign = require("./models/Campaign.js");
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://18.214.154.222:3000",
+      "https://newsletter-campaign-system.vercel.app",
+      "https://newslettercam.me",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(router);
@@ -32,11 +42,11 @@ mongoose
         status: "scheduled",
         scheduledAt: { $lte: new Date() },
       });
-console.log("campaigns", campaigns);
+      console.log("campaigns", campaigns);
       for (const campaign of campaigns) {
         campaign.status = "processing";
         await campaign.save();
-console.log("campaign", campaign);
+        console.log("campaign", campaign);
         await queueCampaign(campaign);
 
         console.log("🚀 Scheduled campaign started:", campaign._id);
