@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Company = require("../models/Company");
+const isProd = process.env.NODE_ENV === "production";
 
 exports.signup = async (req, res) => {
   const { companyName, email, password } = req.body;
@@ -67,11 +68,17 @@ exports.login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    const cookieOptions = { httpOnly: true, secure: false, sameSite: "strict" };
+    const cookieOptions = {
+      httpOnly: true,
+      secure: isProd, // ❌ false in local
+      sameSite: isProd ? "None" : "Lax", // ✅ correct
+      path: "/",
+    };
     res.cookie("accessToken", accessToken, {
       ...cookieOptions,
       maxAge: 15 * 60 * 1000,
     });
+
     res.cookie("refreshToken", refreshToken, {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
