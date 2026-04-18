@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://newsletter-campaign-system-1.onrender.com/api",
+  baseURL: "https://newsletter-campaign-system-1.onrender.com",
   withCredentials: true,
 });
 
