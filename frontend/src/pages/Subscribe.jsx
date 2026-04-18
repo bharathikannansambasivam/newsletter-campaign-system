@@ -39,7 +39,10 @@ export default function Subscribe() {
         </span>
 
         <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
-          Subscribe to <span className="text-orange-500">{company}</span>{" "}
+          Subscribe to{" "}
+          <span className="text-orange-500">
+            {company ? company.charAt(0).toUpperCase() + company.slice(1) : ""}
+          </span>{" "}
           newsletter
         </h1>
 
