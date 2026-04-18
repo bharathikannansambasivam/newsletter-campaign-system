@@ -19,7 +19,6 @@ exports.subscribe = async (req, res) => {
     if (!foundCompany) {
       return res.status(404).json({ message: "Company not found" });
     }
-    console.log(foundCompany);
 
     const existingSubscriber = await Subscriber.findOne({
       email,
@@ -133,7 +132,7 @@ async function queueCampaign(campaign) {
         campaignId: campaign._id,
       }),
     }));
-
+    console.log("entries", entries);
     await sqs.send(
       new SendMessageBatchCommand({
         QueueUrl: process.env.SQS_QUEUE_URL,
