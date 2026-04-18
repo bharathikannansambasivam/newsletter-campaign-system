@@ -105,11 +105,15 @@ exports.refresh = (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "15m" }
     );
+    const cookieOptions = {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "None" : "Lax",
+      path: "/",
+    };
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict",
+      ...cookieOptions,
       maxAge: 15 * 60 * 1000,
     });
 
@@ -122,7 +126,7 @@ exports.refresh = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken", { path: "/" });
+  res.clearCookie("refreshToken", { path: "/" });
   res.json({ message: "Logged out." });
 };

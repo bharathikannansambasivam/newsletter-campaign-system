@@ -11,14 +11,14 @@ const router = require("./routes/route.js");
 const companyRoutes = require("./routes/companyRoutes.js");
 const Campaign = require("./models/Campaign.js");
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://18.214.154.222:3000",
-      "https://newsletter-campaign-system.vercel.app",
       "https://newslettercam.me",
-      "https://newsletter-campaign-frontend.onrender.com",
     ],
     credentials: true,
   })
