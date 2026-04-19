@@ -49,104 +49,106 @@ export default function Signup() {
         <div className="mb-4">
           <BackButton to="/" />
         </div>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">
-          Create an account
-        </h1>
-        <p className="text-sm text-gray-400 mb-6">
-          Sign up to start sending campaigns
-        </p>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full p-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            Create an account
+          </h1>
+          <p className="text-sm text-gray-400 mb-6">
+            Sign up to start sending campaigns
+          </p>
 
-        <form
-          onSubmit={formik.handleSubmit}
-          noValidate
-          className="flex flex-col gap-4"
-        >
-          {/* Company Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Company Name
-            </label>
-            <input
-              type="text"
-              name="companyName"
-              value={formik.values.companyName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Acme Inc."
-              className={inputClass("companyName")}
-            />
-            {formik.touched.companyName && formik.errors.companyName && (
-              <p className="mt-1 text-xs text-red-500">
-                {formik.errors.companyName}
-              </p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="you@company.com"
-              className={inputClass("email")}
-            />
-            {formik.touched.email && formik.errors.email && (
-              <p className="mt-1 text-xs text-red-500">{formik.errors.email}</p>
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="••••••••"
-              className={inputClass("password")}
-            />
-            {formik.touched.password && formik.errors.password && (
-              <p className="mt-1 text-xs text-red-500">
-                {formik.errors.password}
-              </p>
-            )}
-          </div>
-
-          {/* Server error */}
-          {formik.status && (
-            <p className="text-sm text-red-500">{formik.status}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={formik.isSubmitting}
-            className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+          <form
+            onSubmit={formik.handleSubmit}
+            noValidate
+            className="flex flex-col gap-4"
           >
-            {formik.isSubmitting ? "Creating account..." : "Sign Up"}
-          </button>
-        </form>
+            {/* Company Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Company Name
+              </label>
+              <input
+                type="text"
+                name="companyName"
+                value={formik.values.companyName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Acme Inc."
+                className={inputClass("companyName")}
+              />
+              {formik.touched.companyName && formik.errors.companyName && (
+                <p className="mt-1 text-xs text-red-500">
+                  {formik.errors.companyName}
+                </p>
+              )}
+            </div>
 
-        <p className="mt-6 text-sm text-center text-gray-400">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-orange-500 font-medium hover:underline"
-          >
-            Log in
-          </Link>
-        </p>
-      </div>
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="you@company.com"
+                className={inputClass("email")}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="mt-1 text-xs text-red-500">
+                  {formik.errors.email}
+                </p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="••••••••"
+                className={inputClass("password")}
+              />
+              {formik.touched.password && formik.errors.password && (
+                <p className="mt-1 text-xs text-red-500">
+                  {formik.errors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Server error */}
+            {formik.status && (
+              <p className="text-sm text-red-500">{formik.status}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={formik.isSubmitting}
+              className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+            >
+              {formik.isSubmitting ? "Creating account..." : "Sign Up"}
+            </button>
+          </form>
+
+          <p className="mt-6 text-sm text-center text-gray-400">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-orange-500 font-medium hover:underline"
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
