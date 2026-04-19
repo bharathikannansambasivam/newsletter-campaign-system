@@ -6,6 +6,8 @@ import CampaignStats from "./pages/CampaignStats";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Subscribe from "./pages/Subscribe";
+import Unsubscribed from "./pages/Unsubscribed";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/create-campaign" element={<CreateCampaign />} />
         <Route path="/campaign/:id/stats" element={<CampaignStats />} />
         <Route path="/subscribe/:company" element={<Subscribe />} />
+        <Route path="/unsubscribed" element={<Unsubscribed />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -187,7 +187,7 @@ exports.unsubscribe = async (req, res) => {
     subscriber.isSubscribed = false;
     await subscriber.save();
 
-    res.json({ message: "You have been unsubscribed successfully" });
+    res.redirect("https://newslettercam.me/unsubscribed");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
