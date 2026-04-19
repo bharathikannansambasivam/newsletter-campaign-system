@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
+import BackButton from "../components/BackButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -45,7 +46,11 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full max-w-md p-8">
+      <div className="w-full max-w-md">
+        <div className="mb-4">
+          <BackButton to="/" />
+        </div>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h1>
         <p className="text-sm text-gray-400 mb-6">
           Log in to your company account
@@ -99,6 +104,7 @@ export default function Login() {
             Sign up
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );

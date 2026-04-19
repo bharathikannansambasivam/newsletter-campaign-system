@@ -2,6 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../services/api";
+import BackButton from "../components/BackButton";
 
 const validationSchema = Yup.object({
   companyName: Yup.string().required("Company name is required"),
@@ -44,7 +45,11 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full max-w-md p-8">
+      <div className="w-full max-w-md">
+        <div className="mb-4">
+          <BackButton to="/" />
+        </div>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">
           Create an account
         </h1>
@@ -141,6 +146,7 @@ export default function Signup() {
             Log in
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );
