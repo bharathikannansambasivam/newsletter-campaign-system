@@ -70,10 +70,13 @@ async function processMessage(message) {
           },
           Body: {
             Html: {
-              Data:
-      `
+              Data: `
               <p>${campaign.content}</p>
-              <a href="${process.env.BASE_URL}/unsubscribe?email=${encodeURIComponent(body.email)}&companyId=${campaign.companyId}"
+              <a href="${
+                process.env.BASE_URL
+              }/unsubscribe?email=${encodeURIComponent(body.email)}&companyId=${
+                campaign.companyId
+              }"
          style="
            display:inline-block;
            padding:10px 20px;
@@ -86,11 +89,8 @@ async function processMessage(message) {
         Unsubscribe
       </a>
               <br/>
-              `
-
-
-
-},
+              `,
+            },
           },
         },
       })
