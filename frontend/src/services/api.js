@@ -15,7 +15,7 @@ api.interceptors.response.use(
     if (err.response?.status === 401) {
       try {
         await axios.post(
-          "https://newsletter-campaign-system-zww7.onrender.com/company/refresh",
+          "https://api.newslettercam.me/company/refresh",
           {},
           { withCredentials: true }
         );
